@@ -1,4 +1,4 @@
-package com.ssh.common;
+package com.ft.common;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -19,13 +19,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
-import com.ssh.utils.GetterUtil;
-import com.ssh.utils.ReflectionUtils;
-import com.ssh.utils.Validator;
+import com.ft.utils.GetterUtil;
+import com.ft.utils.ReflectionUtils;
+import com.ft.utils.Validator;
 
 
 /**
- * 通用数据持久层
+ * 閫氱敤鏁版嵁鎸佷箙灞�
  * 
  * @author zhangQ 
  * Date: 2013-6-3 20:29
@@ -37,7 +37,7 @@ public abstract class BaseDao<T> {
 	protected Class<T> clazz;
 
 	/**
-	 * 用于Dao层子类使用的构造函数. 通过子类的泛型定义取得对象类型Class. 
+	 * 鐢ㄤ簬Dao灞傚瓙绫讳娇鐢ㄧ殑鏋勯�鍑芥暟. 閫氳繃瀛愮被鐨勬硾鍨嬪畾涔夊彇寰楀璞＄被鍨婥lass. 
 	 * eg. public class UserDao extends BaseDao<User, Long>
 	 */
 	public BaseDao() {
@@ -45,7 +45,7 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 用于用于省略Dao层, 在Service层直接使用通用BaseDao的构造函数. 在构造函数中定义对象类型Class. 
+	 * 鐢ㄤ簬鐢ㄤ簬鐪佺暐Dao灞� 鍦⊿ervice灞傜洿鎺ヤ娇鐢ㄩ�鐢˙aseDao鐨勬瀯閫犲嚱鏁� 鍦ㄦ瀯閫犲嚱鏁颁腑瀹氫箟瀵硅薄绫诲瀷Class. 
 	 * eg. HibernateDao<User, Long> userDao = new BaseDao<User,
 	 * Long>(sessionFactory, User.class);
 	 */
@@ -55,14 +55,14 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 取得sessionFactory.
+	 * 鍙栧緱sessionFactory.
 	 */
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
 
 	/**
-	 * 采用@Autowired按类型注入SessionFactory, 当有多个SesionFactory的时候Override本函数.
+	 * 閲囩敤@Autowired鎸夌被鍨嬫敞鍏essionFactory, 褰撴湁澶氫釜SesionFactory鐨勬椂鍊橭verride鏈嚱鏁�
 	 */
 	@Autowired
 	public void setSessionFactory(final SessionFactory sessionFactory) {
@@ -70,88 +70,88 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 取得当前Session.
+	 * 鍙栧緱褰撳墠Session.
 	 */
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
 
 	/**
-	 * 新增对象.
+	 * 鏂板瀵硅薄.
 	 */
 	public void save(final T entity) {
-		Assert.notNull(entity, "entity不能为空");
+		Assert.notNull(entity, "entity涓嶈兘涓虹┖");
 		getSession().save(entity);
 		logger.debug("save entity: {}", entity);
 	}
 	
 	/**
-	 * 保存新增或修改的对象.
+	 * 淇濆瓨鏂板鎴栦慨鏀圭殑瀵硅薄.
 	 * @param entity
 	 */
 	public void saveOrUpdate(final T entity){
-		Assert.notNull(entity,"entity不能为空");
+		Assert.notNull(entity,"entity涓嶈兘涓虹┖");
 		getSession().saveOrUpdate(entity);
 		logger.debug("saveOrUpdate entity: {}", entity);
 	}
 	
 	/**
-	 * 更新对象
+	 * 鏇存柊瀵硅薄
 	 */
 	public void update(final T entity){
-		Assert.notNull(entity,"entity不能为空");
+		Assert.notNull(entity,"entity涓嶈兘涓虹┖");
 		getSession().update(entity);
 		logger.debug("update entity: {}", entity);
 	}
 	
 	/**
-	 * 更新对象
+	 * 鏇存柊瀵硅薄
 	 */
 	@SuppressWarnings("unchecked")
 	public T merge(final T entity){
-		Assert.notNull(entity,"entity不能为空");
+		Assert.notNull(entity,"entity涓嶈兘涓虹┖");
 		logger.debug("merge entity: {}", entity);
 		return (T) getSession().merge(entity);
 	}
 	
 	/**
-	 * 删除对象.
+	 * 鍒犻櫎瀵硅薄.
 	 * 
-	 * @param entity 对象必须是session中的对象或含id属性的transient对象.
+	 * @param entity 瀵硅薄蹇呴』鏄痵ession涓殑瀵硅薄鎴栧惈id灞炴�鐨則ransient瀵硅薄.
 	 */
 	public void delete(final T entity) {
-		Assert.notNull(entity, "entity不能为空");
+		Assert.notNull(entity, "entity涓嶈兘涓虹┖");
 		getSession().delete(entity);
 		logger.debug("delete entity: {}", entity);
 	}
 
 	/**
-	 * 按id删除对象.
+	 * 鎸塱d鍒犻櫎瀵硅薄.
 	 */
 	public void delete(final Serializable id) {
-		Assert.notNull(id, "id不能为空");
+		Assert.notNull(id, "id涓嶈兘涓虹┖");
 		delete(get(id));
 		logger.debug("delete entity {},id is {}", clazz.getSimpleName(), id);
 	}
 
 	/**
-	 * 按id获取对象.
+	 * 鎸塱d鑾峰彇瀵硅薄.
 	 */
 	@SuppressWarnings("unchecked")
 	public T get(final Serializable id) {
-		Assert.notNull(id, "id不能为空");
+		Assert.notNull(id, "id涓嶈兘涓虹┖");
 		return (T) getSession().get(clazz, id);
 	}
 
 	/**
-	 * 获取全部对象.
+	 * 鑾峰彇鍏ㄩ儴瀵硅薄.
 	 */
 	public List<T> findAll() {
 		return find();
 	}
 	
 	/**
-	 * 统计所有
+	 * 缁熻鎵�湁
 	 * @return
 	 */
 	public int countAll(){
@@ -160,7 +160,7 @@ public abstract class BaseDao<T> {
 	
 	
 	/**
-	 * 删除所有
+	 * 鍒犻櫎鎵�湁
 	 */
 	public void removeAll(){
 		int num= getSession().createQuery("delete from "+clazz.getSimpleName()).executeUpdate();
@@ -168,7 +168,7 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 按照hql批量更新
+	 * 鎸夌収hql鎵归噺鏇存柊
 	 * @param hql
 	 * @param objects
 	 */
@@ -183,7 +183,7 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 分页查询所有，并且按照orderBy字段排序
+	 * 鍒嗛〉鏌ヨ鎵�湁锛屽苟涓旀寜鐓rderBy瀛楁鎺掑簭
 	 * @param orderBy
 	 * @param isAsc
 	 * @param firstIndex
@@ -206,7 +206,7 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 分页排序查询
+	 * 鍒嗛〉鎺掑簭鏌ヨ
 	 * @param orderby
 	 * @param firstIndex
 	 * @param maxResult
@@ -217,9 +217,9 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 条件分页查询
-	 * @param whereHql 不含"where"关键字的查询条件，如"name=? and age=?"
-	 * @param queryParams 参数值对象
+	 * 鏉′欢鍒嗛〉鏌ヨ
+	 * @param whereHql 涓嶅惈"where"鍏抽敭瀛楃殑鏌ヨ鏉′欢锛屽"name=? and age=?"
+	 * @param queryParams 鍙傛暟鍊煎璞�
 	 * @param firstIndex
 	 * @param maxResult
 	 * @return
@@ -229,7 +229,7 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 分页查询所有
+	 * 鍒嗛〉鏌ヨ鎵�湁
 	 * @param firstIndex
 	 * @param maxResult
 	 * @return
@@ -239,7 +239,7 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 根据完整的HQL语句分页查询
+	 * 鏍规嵁瀹屾暣鐨凥QL璇彞鍒嗛〉鏌ヨ
 	 * @param fullHQL
 	 * @param queryParams
 	 * @param firstIndex
@@ -256,10 +256,10 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 条件查询，并且分页返回结果
-	 * @param whereHql 不含"where"关键字的查询条件，如"name=? and age=?"
-	 * @param queryParams 参数值对象
-	 * @param orderBy 排序map，如 new LinkedHashMap<String,String>().put("name","desc")
+	 * 鏉′欢鏌ヨ锛屽苟涓斿垎椤佃繑鍥炵粨鏋�
+	 * @param whereHql 涓嶅惈"where"鍏抽敭瀛楃殑鏌ヨ鏉′欢锛屽"name=? and age=?"
+	 * @param queryParams 鍙傛暟鍊煎璞�
+	 * @param orderBy 鎺掑簭map锛屽 new LinkedHashMap<String,String>().put("name","desc")
 	 * @param firstIndex
 	 * @param maxResult
 	 * @return
@@ -279,7 +279,7 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 构造order by语句
+	 * 鏋勯�order by璇彞
 	 * @param orderBy
 	 * @return
 	 */
@@ -296,7 +296,7 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 按照条件统计
+	 * 鎸夌収鏉′欢缁熻
 	 * @param whereHql
 	 * @param queryParams
 	 * @return
@@ -311,7 +311,7 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 更加完整hql条件查询
+	 * 鏇村姞瀹屾暣hql鏉′欢鏌ヨ
 	 * @param fullHQL
 	 * @param queryParams
 	 * @return
@@ -322,32 +322,32 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 按属性查找对象列表,匹配方式为相等
+	 * 鎸夊睘鎬ф煡鎵惧璞″垪琛�鍖归厤鏂瑰紡涓虹浉绛�
 	 * @param propertyName
 	 * @param value
 	 * @return
 	 */
 	public List<T> findBy(final String propertyName, final Object value) {
-		Assert.hasText(propertyName, "propertyName不能为空");
+		Assert.hasText(propertyName, "propertyName涓嶈兘涓虹┖");
 		Criterion criterion = Restrictions.eq(propertyName, value);
 		return find(criterion);
 	}
 
 	/**
-	 * 按属性查找唯一对象,匹配方式为相等.
+	 * 鎸夊睘鎬ф煡鎵惧敮涓�璞�鍖归厤鏂瑰紡涓虹浉绛�
 	 * @param propertyName
 	 * @param value
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public T findUniqueBy(final String propertyName, final Object value) {
-		Assert.hasText(propertyName, "propertyName不能为空");
+		Assert.hasText(propertyName, "propertyName涓嶈兘涓虹┖");
 		Criterion criterion = Restrictions.eq(propertyName, value);
 		return (T) createCriteria(criterion).setCacheable(true).setFirstResult(0).setMaxResults(1).uniqueResult();
 	}
 
 	/**
-	 * 按id列表获取对象.
+	 * 鎸塱d鍒楄〃鑾峰彇瀵硅薄.
 	 * @param ids
 	 * @return
 	 */
@@ -359,9 +359,9 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 按HQL查询对象列表.
+	 * 鎸塇QL鏌ヨ瀵硅薄鍒楄〃.
 	 * 
-	 * @param values 数量可变的参数,按顺序绑定.
+	 * @param values 鏁伴噺鍙彉鐨勫弬鏁�鎸夐『搴忕粦瀹�
 	 */
 	@SuppressWarnings("unchecked")
 	public <X> List<X> find(final String hql, final Object... values) {
@@ -369,9 +369,9 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 按HQL查询对象列表.
+	 * 鎸塇QL鏌ヨ瀵硅薄鍒楄〃.
 	 * 
-	 * @param values 命名参数,按名称绑定.
+	 * @param values 鍛藉悕鍙傛暟,鎸夊悕绉扮粦瀹�
 	 */
 	@SuppressWarnings("unchecked")
 	public <X> List<X> find(final String hql, final Map<String, ?> values) {
@@ -379,10 +379,10 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 按照FullHQL分页查询对象列表
-	 * @param firstIndex 起始行的下标，第一个从0开始。注意：区别pageIndex 
+	 * 鎸夌収FullHQL鍒嗛〉鏌ヨ瀵硅薄鍒楄〃
+	 * @param firstIndex 璧峰琛岀殑涓嬫爣锛岀涓�釜浠�寮�銆傛敞鎰忥細鍖哄埆pageIndex 
 	 * @param pageSize
-	 * @param hql 完整的hql语句
+	 * @param hql 瀹屾暣鐨刪ql璇彞
 	 * @param values
 	 * @return
 	 */
@@ -392,9 +392,9 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 按HQL查询唯一对象.
+	 * 鎸塇QL鏌ヨ鍞竴瀵硅薄.
 	 * 
-	 * @param values 数量可变的参数,按顺序绑定.
+	 * @param values 鏁伴噺鍙彉鐨勫弬鏁�鎸夐『搴忕粦瀹�
 	 */
 	@SuppressWarnings("unchecked")
 	public <X> X findUnique(final String hql, final Object... values) {
@@ -402,9 +402,9 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 按HQL查询唯一对象.
+	 * 鎸塇QL鏌ヨ鍞竴瀵硅薄.
 	 * 
-	 * @param values 命名参数,按名称绑定.
+	 * @param values 鍛藉悕鍙傛暟,鎸夊悕绉扮粦瀹�
 	 */
 	@SuppressWarnings("unchecked")
 	public <X> X findUnique(final String hql, final Map<String, ?> values) {
@@ -412,7 +412,7 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 执行HQL进行批量修改/删除操作.
+	 * 鎵цHQL杩涜鎵归噺淇敼/鍒犻櫎鎿嶄綔.
 	 * @param hql
 	 * @param values
 	 * @return
@@ -422,25 +422,25 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 执行HQL进行批量修改/删除操作.
+	 * 鎵цHQL杩涜鎵归噺淇敼/鍒犻櫎鎿嶄綔.
 	 * 
 	 * @param hql
 	 * @param values
-	 * @return 更新记录数.
+	 * @return 鏇存柊璁板綍鏁�
 	 */
 	public int batchExecute(final String hql, final Map<String, ?> values) {
 		return createQuery(hql, values).executeUpdate();
 	}
 
 	/**
-	 * 根据查询HQL与参数列表创建Query对象.
+	 * 鏍规嵁鏌ヨHQL涓庡弬鏁板垪琛ㄥ垱寤篞uery瀵硅薄.
 	 * <p/>
-	 * 本类封装的find()函数全部默认返回对象类型为T,当不为T时使用本函数.
+	 * 鏈被灏佽鐨刦ind()鍑芥暟鍏ㄩ儴榛樿杩斿洖瀵硅薄绫诲瀷涓篢,褰撲笉涓篢鏃朵娇鐢ㄦ湰鍑芥暟.
 	 * 
-	 * @param values 数量可变的参数,按顺序绑定.
+	 * @param values 鏁伴噺鍙彉鐨勫弬鏁�鎸夐『搴忕粦瀹�
 	 */
 	public Query createQuery(final String queryString, final Object... values) {
-		Assert.hasText(queryString, "queryString不能为空");
+		Assert.hasText(queryString, "queryString涓嶈兘涓虹┖");
 		Query query = getSession().createQuery(queryString).setCacheable(true);
 		if (values != null && values.length > 0) {
 			for (int i = 0; i < values.length; i++) {
@@ -451,12 +451,12 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 根据查询HQL与参数列表创建Query对象.
+	 * 鏍规嵁鏌ヨHQL涓庡弬鏁板垪琛ㄥ垱寤篞uery瀵硅薄.
 	 * 
-	 * @param values 命名参数,按名称绑定.
+	 * @param values 鍛藉悕鍙傛暟,鎸夊悕绉扮粦瀹�
 	 */
 	public Query createQuery(final String queryString, final Map<String, ?> values) {
-		Assert.hasText(queryString, "queryString不能为空");
+		Assert.hasText(queryString, "queryString涓嶈兘涓虹┖");
 		Query query = getSession().createQuery(queryString).setCacheable(true);
 		if (values != null) {
 			query.setProperties(values);
@@ -465,9 +465,9 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 按Criteria查询对象列表.
+	 * 鎸塁riteria鏌ヨ瀵硅薄鍒楄〃.
 	 * 
-	 * @param criterions 数量可变的Criterion.
+	 * @param criterions 鏁伴噺鍙彉鐨凜riterion.
 	 */
 	@SuppressWarnings("unchecked")
 	public List<T> find(final Criterion... criterions) {
@@ -475,9 +475,9 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 按Criteria查询唯一对象.
+	 * 鎸塁riteria鏌ヨ鍞竴瀵硅薄.
 	 * 
-	 * @param criterions 数量可变的Criterion.
+	 * @param criterions 鏁伴噺鍙彉鐨凜riterion.
 	 */
 	@SuppressWarnings("unchecked")
 	public T findUnique(final Criterion... criterions) {
@@ -485,11 +485,11 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 根据Criterion条件创建Criteria.
+	 * 鏍规嵁Criterion鏉′欢鍒涘缓Criteria.
 	 * <p/>
-	 * 本类封装的find()函数全部默认返回对象类型为T,当不为T时使用本函数.
+	 * 鏈被灏佽鐨刦ind()鍑芥暟鍏ㄩ儴榛樿杩斿洖瀵硅薄绫诲瀷涓篢,褰撲笉涓篢鏃朵娇鐢ㄦ湰鍑芥暟.
 	 * 
-	 * @param criterions 数量可变的Criterion.
+	 * @param criterions 鏁伴噺鍙彉鐨凜riterion.
 	 */
 	public Criteria createCriteria(final Criterion... criterions) {
 		Criteria criteria = getSession().createCriteria(clazz).setCacheable(true);
@@ -500,7 +500,7 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 执行sql查询
+	 * 鎵цsql鏌ヨ
 	 * @param sql
 	 * @return
 	 */
@@ -510,10 +510,10 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 按照sql分页查询对象列表
-	 * @param firstIndex 起始行的下标，第一个从0开始。注意：区别pageIndex 
+	 * 鎸夌収sql鍒嗛〉鏌ヨ瀵硅薄鍒楄〃
+	 * @param firstIndex 璧峰琛岀殑涓嬫爣锛岀涓�釜浠�寮�銆傛敞鎰忥細鍖哄埆pageIndex 
 	 * @param pageSize
-	 * @param sql 完整的sql语句
+	 * @param sql 瀹屾暣鐨剆ql璇彞
 	 * @param values
 	 * @return
 	 */
@@ -534,7 +534,7 @@ public abstract class BaseDao<T> {
 	}
 	
 	/**
-	 * 根据sql统计个数
+	 * 鏍规嵁sql缁熻涓暟
 	 * 
 	 * @param sql
 	 * @param values
@@ -551,7 +551,7 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 执行sql更新语句
+	 * 鎵цsql鏇存柊璇彞
 	 * @param sql
 	 * @return
 	 */
@@ -560,10 +560,10 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * 初始化对象. 使用load()方法得到的仅是对象Proxy, 在传到View层前需要进行初始化. 
-	 * 只初始化entity的直接属性,但不会初始化延迟加载的关联集合和属性. 如需初始化关联属性,可实现新的函数,执行:
-	 * Hibernate.initialize(user.getRoles())，初始化User的直接属性和关联集合. Hibernate.initialize
-	 * (user.getDescription())，初始化User的直接属性和延迟加载的Description属性.
+	 * 鍒濆鍖栧璞� 浣跨敤load()鏂规硶寰楀埌鐨勪粎鏄璞roxy, 鍦ㄤ紶鍒癡iew灞傚墠闇�杩涜鍒濆鍖� 
+	 * 鍙垵濮嬪寲entity鐨勭洿鎺ュ睘鎬�浣嗕笉浼氬垵濮嬪寲寤惰繜鍔犺浇鐨勫叧鑱旈泦鍚堝拰灞炴�. 濡傞渶鍒濆鍖栧叧鑱斿睘鎬�鍙疄鐜版柊鐨勫嚱鏁�鎵ц:
+	 * Hibernate.initialize(user.getRoles())锛屽垵濮嬪寲User鐨勭洿鎺ュ睘鎬у拰鍏宠仈闆嗗悎. Hibernate.initialize
+	 * (user.getDescription())锛屽垵濮嬪寲User鐨勭洿鎺ュ睘鎬у拰寤惰繜鍔犺浇鐨凞escription灞炴�.
 	 */
 	public void initEntity(T entity) {
 		Hibernate.initialize(entity);
@@ -579,14 +579,14 @@ public abstract class BaseDao<T> {
 	}
 
 	/**
-	 * Flush当前Session.
+	 * Flush褰撳墠Session.
 	 */
 	public void flush() {
 		getSession().flush();
 	}
 
 	/**
-	 * 取得对象的主键名.
+	 * 鍙栧緱瀵硅薄鐨勪富閿悕.
 	 */
 	public String getIdName() {
 		ClassMetadata meta = getSessionFactory().getClassMetadata(clazz);

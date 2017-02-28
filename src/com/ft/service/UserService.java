@@ -1,22 +1,19 @@
-package com.ssh.service;
+package com.ft.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssh.common.BaseService;
-import com.ssh.dao.UserDao;
-import com.ssh.entity.SysUser;
+import com.ft.common.BaseService;
+import com.ft.dao.UserDao;
+import com.ft.entity.User;
+
+
 
 @Service
-public class UserService extends BaseService<SysUser> {
- @Autowired 
-  UserDao dao;
- /*  
-  @Transactional
-  public void save(SysUser u)
-  {
-	  dao.save(u);
-	  System.out.println("============");
-  }*/
+public class UserService  extends BaseService<User>{
+@Autowired
+UserDao dao;
+
+
 }

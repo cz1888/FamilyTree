@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//src/com/ft/common/BaseDao.java=UTF-8
+encoding//src/com/ft/common/BaseService.java=UTF-8
+encoding//src/com/ft/common/InjectBaseDependencyHelper.java=UTF-8
+encoding//src/com/ft/common/Page.java=UTF-8
+encoding//src/com/ft/utils/CharPool.java=UTF-8
+encoding//src/com/ft/utils/ReflectionUtils.java=UTF-8
+encoding//src/com/ft/utils/SpringUtils.java=UTF-8
+encoding//src/com/ft/utils/StringUtil.java=UTF-8
+encoding//src/com/ft/utils/Validator.java=UTF-8

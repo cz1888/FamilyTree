@@ -1,1 +1,0 @@
-${u.username}:${u.pwd}

@@ -1,4 +1,4 @@
-package com.ssh.utils;
+package com.ft.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -2688,12 +2688,12 @@ public class StringUtil {
 	}
 	
 	/**
-	 * 过滤掉Html标签
+	 * 杩囨护鎺塇tml鏍囩
 	 * @param inputString
 	 * @return
 	 */
 	public static String html2Text(String inputString) {
-		String htmlStr = inputString; // 含html标签的字符串
+		String htmlStr = inputString; // 鍚玥tml鏍囩鐨勫瓧绗︿覆
 		String textStr = "";
 		Pattern p_script;
 		Matcher m_script;
@@ -2703,23 +2703,23 @@ public class StringUtil {
 		Matcher m_html;
 
 		try {
-			String regEx_script = "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>"; // 定义script的正则表达式{或<script[^>]*?>[\\s\\S]*?<\\/script>
+			String regEx_script = "<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>"; // 瀹氫箟script鐨勬鍒欒〃杈惧紡{鎴�script[^>]*?>[\\s\\S]*?<\\/script>
 																										// }
-			String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>"; // 定义style的正则表达式{或<style[^>]*?>[\\s\\S]*?<\\/style>
+			String regEx_style = "<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>"; // 瀹氫箟style鐨勬鍒欒〃杈惧紡{鎴�style[^>]*?>[\\s\\S]*?<\\/style>
 																									// }
-			String regEx_html = "<[^>]+>"; // 定义HTML标签的正则表达式
+			String regEx_html = "<[^>]+>"; // 瀹氫箟HTML鏍囩鐨勬鍒欒〃杈惧紡
 
 			p_script = Pattern.compile(regEx_script, Pattern.CASE_INSENSITIVE);
 			m_script = p_script.matcher(htmlStr);
-			htmlStr = m_script.replaceAll(""); // 过滤script标签
+			htmlStr = m_script.replaceAll(""); // 杩囨护script鏍囩
 
 			p_style = Pattern.compile(regEx_style, Pattern.CASE_INSENSITIVE);
 			m_style = p_style.matcher(htmlStr);
-			htmlStr = m_style.replaceAll(""); // 过滤style标签
+			htmlStr = m_style.replaceAll(""); // 杩囨护style鏍囩
 
 			p_html = Pattern.compile(regEx_html, Pattern.CASE_INSENSITIVE);
 			m_html = p_html.matcher(htmlStr);
-			htmlStr = m_html.replaceAll(""); // 过滤html标签
+			htmlStr = m_html.replaceAll(""); // 杩囨护html鏍囩
 
 			textStr = htmlStr;
 
@@ -2727,11 +2727,11 @@ public class StringUtil {
 			System.err.println("Html2Text: " + e.getMessage());
 		}
 
-		return textStr;// 返回文本字符串
+		return textStr;// 杩斿洖鏂囨湰瀛楃涓�
 	}
 	
 	/**
-	 * 将包含下划线的属性名修正为驼峰式命名。如setParent_id_qq_name,修正后为setParentIdQqName
+	 * 灏嗗寘鍚笅鍒掔嚎鐨勫睘鎬у悕淇涓洪┘宄板紡鍛藉悕銆傚setParent_id_qq_name,淇鍚庝负setParentIdQqName
 	 * 
 	 * @param fieldName
 	 * @return

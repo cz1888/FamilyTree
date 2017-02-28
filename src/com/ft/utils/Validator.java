@@ -1,4 +1,4 @@
-package com.ssh.utils;
+package com.ft.utils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 校验工具类
+ * 鏍￠獙宸ュ叿绫�
  * 
  */
 public class Validator {

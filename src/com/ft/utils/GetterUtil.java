@@ -1,11 +1,11 @@
-package com.ssh.utils;
+package com.ft.utils;
 
 import java.text.DateFormat;
 
 import java.util.Date;
 
 /**
- * 类型转换工具类
+ * 类型转换工具�?
  * 
  * @create date: 2014-11-18
  */

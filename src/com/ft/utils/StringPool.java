@@ -1,4 +1,4 @@
-package com.ssh.utils;
+package com.ft.utils;
 
 /**
  * 字符串池

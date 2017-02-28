@@ -1,7 +1,7 @@
-package com.ssh.utils;
+package com.ft.utils;
 
 /**
- * 字符池
+ * 瀛楃姹�
  * 
  * @author zhangQ
  * @create date: 2014-11-18
@@ -134,7 +134,7 @@ public class CharPool {
 
 	public static final char QUOTE = '\"';
 
-	public static final char RAQUO = '\u00bb'; // '�'
+	public static final char RAQUO = '\u00bb'; // '锟�
 
 	public static final char RETURN = '\r';
 
