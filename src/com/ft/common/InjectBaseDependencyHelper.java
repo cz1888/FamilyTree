@@ -1,4 +1,4 @@
-package com.ssh.common;
+package com.ft.common;
 
 
 import java.beans.PropertyDescriptor;
@@ -11,11 +11,11 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ReflectionUtils;
-import com.ssh.common.BaseDao;
-import com.ssh.common.BaseService;
+import com.ft.common.BaseDao;
+import com.ft.common.BaseService;
 
 /**
- * 注入BaseDao 及 BaseService 的工具类
+ * 注入BaseDao及BaseService的工具类
  * 
  * @auto zhangQ
  * create date:2013-10-11 20:46
@@ -24,7 +24,7 @@ public class InjectBaseDependencyHelper {
 
 
 	/**
-	 * 查找并且注入BaseDao
+	 * 查找并注入BaseDao
 	 * @param baseService
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -45,8 +45,7 @@ public class InjectBaseDependencyHelper {
     }
 
     /**
-     * 根据类在目标对象上的字段上查找依赖
-     *
+     * 根据类在目标对象的字段上查询依赖
      * @param target
      * @param annotation
      */
