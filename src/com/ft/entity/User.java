@@ -1,17 +1,42 @@
 package com.ft.entity;
 
-/**
- * User entity. @author MyEclipse Persistence Tools
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+/**
+ * SysUser entity. @author MyEclipse Persistence Tools
+ */
+@Entity 
+@Table(name = "testqqr")
 public class User implements java.io.Serializable {
 
 	// Fields
-
+	@Id
+	@Column(name="id", unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	@Column(length=20)
 	private String username;
+	@Column(length=20)
 	private String password;
-	private String address;
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	/*private String address;
 	private Integer sex;
 	private Integer phone;
 	private String realname;
@@ -19,11 +44,11 @@ public class User implements java.io.Serializable {
 	private Integer familyId;
 	private Integer fatherId;
 	private Integer motherId;
-	private String birthplace;
+	private String birthplace;*/
 
 	// Constructors
 
-	public String getBirthplace() {
+	/*public String getBirthplace() {
 		return birthplace;
 	}
 
@@ -39,11 +64,11 @@ public class User implements java.io.Serializable {
 		this.address = address;
 	}
 
-	/** default constructor */
+	*//** default constructor *//*
 	public User() {
 	}
 
-	/** full constructor */
+	*//** full constructor *//*
 	public User(String username, String passward, Integer sex, Integer phone,
 			String realname, String email, Integer familyId, Integer fatherId,
 			Integer motherId) {
@@ -141,5 +166,5 @@ public class User implements java.io.Serializable {
 	public void setMotherId(Integer motherId) {
 		this.motherId = motherId;
 	}
-
+*/
 }

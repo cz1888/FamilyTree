@@ -1,4 +1,4 @@
-package com.ft.hibernatetest;
+package com.ft.junit;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -43,9 +43,9 @@ public class HibernateDemo {
 	
 		UserDao dao=new UserDao();
         User test= new User();
-        test.setUsername("哆啦A梦");
-        test.setAddress("日本东京");;
-		dao.add(test);
+        test.setUsername("哆啦c梦");
+       // test.setAddress("日本东京");;
+		dao.save(test);
 		
 //		第六步 提交事务
 //		tx.commit();

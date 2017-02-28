@@ -1,61 +1,17 @@
 package com.ft.dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
+
+import org.springframework.stereotype.Repository;
+
+import com.ft.common.BaseDao;
 import com.ft.entity.User;
-import com.ft.utils.HibernateUtils;
 
-public class UserDao {
-	static{
+@Repository
+public class UserDao extends BaseDao<User>{
 	
-	}
 	
-public void add(User user)
-{
-	SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-	Session session = sessionFactory.openSession();
-	Transaction tx = session.beginTransaction();
-	session.save(user);
-	tx.commit();
-	session.close();
-	sessionFactory.close();
 	
-}
-
-public void delete(User user){
-
-	SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-	Session session = sessionFactory.openSession();
-	Transaction tx = session.beginTransaction();
-	session.delete(user);
-	tx.commit();
-	session.close();
-	sessionFactory.close();
-}
-
-public void update(User user){
-
-	SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-	Session session = sessionFactory.openSession();
-	Transaction tx = session.beginTransaction();
-	session.update(user);
-	tx.commit();
-	session.close();
-	sessionFactory.close();
-}
-
-public User get(int id){
-
-	SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
-	Session session = sessionFactory.openSession();
-	Transaction tx = session.beginTransaction();
-	User temp=(User)session.get(User.class,id);
-	tx.commit();
-	session.close();
-	sessionFactory.close();
-	return temp;
-}
+	
 
 }
