@@ -1,19 +1,24 @@
 package com.ft.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
  * SysUser entity. @author MyEclipse Persistence Tools
  */
 @Entity 
-@Table(name = "testqqr")
+@Table(name = "user")
 public class User implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	// Fields
 	@Id
 	@Column(name="id", unique=true, nullable=false)
@@ -23,6 +28,31 @@ public class User implements java.io.Serializable {
 	private String username;
 	@Column(length=20)
 	private String password;
+	@Column(length=20)
+	private String firstname;
+	@Column(length=20)
+	private String lastname;
+	@Column(length=8)
+	private Date birthday;
+	@Column(length=11)
+	private String telephone;
+	@Column(length=20)
+	private String nativeplace;
+	@Column(length=20)
+	private String location;
+	@Column(length=4)
+	private boolean register;
+	@Column(length=4)
+	private boolean live;
+	@ManyToOne
+	@JoinColumn(name="familyId")
+	private Family family;
+	@Column
+	private Integer fatherId;
+	@Column
+	private Integer motherId;
+	@Column
+	private String img_url;
 	public String getUsername() {
 		return username;
 	}
@@ -35,136 +65,83 @@ public class User implements java.io.Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	/*private String address;
-	private Integer sex;
-	private Integer phone;
-	private String realname;
-	private String email;
-	private Integer familyId;
-	private Integer fatherId;
-	private Integer motherId;
-	private String birthplace;*/
-
-	// Constructors
-
-	/*public String getBirthplace() {
-		return birthplace;
-	}
-
-	public void setBirthplace(String birthplace) {
-		this.birthplace = birthplace;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	*//** default constructor *//*
-	public User() {
-	}
-
-	*//** full constructor *//*
-	public User(String username, String passward, Integer sex, Integer phone,
-			String realname, String email, Integer familyId, Integer fatherId,
-			Integer motherId) {
-		this.username = username;
-		this.password = passward;
-		this.sex = sex;
-		this.phone = phone;
-		this.realname = realname;
-		this.email = email;
-		this.familyId = familyId;
-		this.fatherId = fatherId;
-		this.motherId = motherId;
-	}
-
-	// Property accessors
-
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getUsername() {
-		return this.username;
+	public String getFirstname() {
+		return firstname;
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
-
-
-
-	public String getPassword() {
-		return password;
+	public String getLastname() {
+		return lastname;
 	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
-
-	public Integer getSex() {
-		return this.sex;
+	public Date getBirthday() {
+		return birthday;
 	}
-
-	public void setSex(Integer sex) {
-		this.sex = sex;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
-
-	public Integer getPhone() {
-		return this.phone;
+	public String getTelephone() {
+		return telephone;
 	}
-
-	public void setPhone(Integer phone) {
-		this.phone = phone;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
-
-	public String getRealname() {
-		return this.realname;
+	public String getNativeplace() {
+		return nativeplace;
 	}
-
-	public void setRealname(String realname) {
-		this.realname = realname;
+	public void setNativeplace(String nativeplace) {
+		this.nativeplace = nativeplace;
 	}
-
-	public String getEmail() {
-		return this.email;
+	public String getLocation() {
+		return location;
 	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLocation(String location) {
+		this.location = location;
 	}
-
-	public Integer getFamilyId() {
-		return this.familyId;
+	public boolean isRegister() {
+		return register;
 	}
-
-	public void setFamilyId(Integer familyId) {
-		this.familyId = familyId;
+	public void setRegister(boolean register) {
+		this.register = register;
 	}
-
+	public boolean isLive() {
+		return live;
+	}
+	public void setLive(boolean live) {
+		this.live = live;
+	}
+	public Family getFamilyId() {
+		return family;
+	}
+	public void setFamilyId(Family family) {
+		this.family = family;
+	}
 	public Integer getFatherId() {
-		return this.fatherId;
+		return fatherId;
 	}
-
 	public void setFatherId(Integer fatherId) {
 		this.fatherId = fatherId;
 	}
-
 	public Integer getMotherId() {
-		return this.motherId;
+		return motherId;
 	}
-
 	public void setMotherId(Integer motherId) {
 		this.motherId = motherId;
 	}
-*/
+	public String getImg_url() {
+		return img_url;
+	}
+	public void setImg_url(String img_url) {
+		this.img_url = img_url;
+	}
+
 }

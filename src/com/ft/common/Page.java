@@ -3,38 +3,38 @@ package com.ft.common;
 import java.util.List;
 
 /**
- * 鍒嗛〉鏁版嵁瀵硅薄
+ * 分页数据对象
  * 
  * @author zhangQ
  * @created date:2013-8-7
  */
 public class Page<T> {
 
-	/** 褰撳墠椤垫暟 */
+	/** 当前页数 */
 	private int index = 1;
 
-	/** 鎬昏褰曟暟 */
+	/** 总记录数 */
 	private int totalRow;
 
-	/** 姣忛〉鏄剧ず鏉℃暟锛岄粯璁�0鏉�*/
+	/** 每页显示条数，默认20条 */
 	private int pageSize = 20;
 
-	/** 褰撳墠椤佃捣濮嬭 */
+	/** 当前页起始行 */
 	private int start;
 
-	/** 褰撳墠椤电粨鏉熻 */
+	/** 当前页结束行 */
 	private int end;
 
-	/** 璁板綍鍒楄〃锛屽垎椤垫暟鎹�*/
+	/** 记录列表，分页数据 */
 	private List<T> records;
 
-	/** 鎬婚〉鏁�*/
+	/** 总页数 */
 	private int totalPage;
 
-	/** 鏄剧ず鐨勯〉鐮佸垪琛ㄧ殑寮�绱㈠紩 */
+	/** 显示的页码列表的开始索引 */
 	private int startPageIndex = 1;
 
-	/** 鏄剧ず鐨勯〉鐮佸垪琛ㄧ殑缁撴潫绱㈠紩 */
+	/** 显示的页码列表的结束索引 */
 	private int endPageIndex = 10;
 
 	public Page() {
@@ -63,11 +63,11 @@ public class Page<T> {
 
 	public void setIndex(int index) {
 		if (index < 1) {
-			index = 1; // 褰撳墠椤靛皬浜�鐨勬椂鍊欒嚜鍔ㄨ祴鍊间负绗竴椤�
+			index = 1; // 当前页小于0的时候自动赋值为第一页
 		} else {
-			start = pageSize * (index - 1); // 璁＄畻寮�琛屾暟
+			start = pageSize * (index - 1); // 计算开始行数
 		}
-		end = start + pageSize > totalRow ? totalRow : start + pageSize; // 璁＄畻缁撴潫琛屾暟
+		end = start + pageSize > totalRow ? totalRow : start + pageSize; // 计算结束行数
 		this.index = index;
 	}
 
@@ -78,7 +78,7 @@ public class Page<T> {
 	public void setTotalRow(int totalRow) {
 		totalPage = (totalRow + pageSize - 1) / pageSize;
 		this.totalRow = totalRow;
-		if (totalPage < index) { // 褰撳墠
+		if (totalPage < index) { // 当前
 			totalPage = index;
 			/*start = pageSize * (index - 1);
 			end = totalRow;*/
@@ -145,7 +145,7 @@ public class Page<T> {
 	
 	
 	/**
-	 * 鏄惁杩樻湁涓婁竴椤�
+	 * 是否还有上一页
 	 * @return
 	 */
 	public boolean hasPreviousPage() {
@@ -154,7 +154,7 @@ public class Page<T> {
 	
 	
 	/**
-	 * 鏄惁涓虹涓�〉
+	 * 是否为第一页
 	 * @return
 	 */
 	public boolean isFirstPage() {
@@ -162,7 +162,7 @@ public class Page<T> {
 	}
 	
 	/**
-	 * 鏄惁鏈変笅涓�〉
+	 * 是否有下一页
 	 * @return
 	 */
 	public boolean hasNextPage() {
@@ -171,28 +171,28 @@ public class Page<T> {
 	
 	
 	/**
-	 * 鏄惁涓烘渶鍚庝竴椤�
+	 * 是否为最后一页
 	 * @return
 	 */
 	public boolean isLastPage() {
 		return !hasNextPage();
 	}
 
-	/** 鏋勫缓鏄剧ず鐨勯〉鐮佸垪琛ㄧ殑绱㈠紩 */
+	/** 构建显示的页码列表的索引 */
 	private void buildPageIndex() {
-		if (totalPage <= 10) { // a, 鎬婚〉鐮佷笉澶т簬10椤�
+		if (totalPage <= 10) { // a, 总页码不大于10页
 			startPageIndex = 1;
 			endPageIndex = totalPage;
-		} else { // b, 鎬荤爜澶т簬10椤�
-			// 鍦ㄤ腑闂达紝鏄剧ず鍓嶉潰4涓紝鍚庨潰5涓�
+		} else { // b, 总码大于10页
+			// 在中间，显示前面4个，后面5个
 			startPageIndex = index - 4;
 			endPageIndex = index + 5;
 
-			// 鍓嶉潰涓嶈冻4涓椂锛屾樉绀哄墠10涓〉鐮�
+			// 前面不足4个时，显示前10个页码
 			if (startPageIndex < 1) {
 				startPageIndex = 1;
 				endPageIndex = 10;
-			} else if (endPageIndex > totalPage) {// 鍚庨潰涓嶈冻5涓椂锛屾樉绀哄悗10涓〉鐮�
+			} else if (endPageIndex > totalPage) {// 后面不足5个时，显示后10个页码
 				endPageIndex = totalPage;
 				startPageIndex = totalPage - 10 + 1;
 			}

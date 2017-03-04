@@ -1,4 +1,5 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@page import="com.ft.service.UserService,com.ft.entity.User"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,7 +10,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>My JSP 'Manager.jsp' starting page</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -18,9 +20,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
-    <jsp:forward page="/WEB-INF/jsp/login.jsp"></jsp:forward>
+    <div>管理员界面.</div> <br>
+    <%int i; %>
+    <table>
+    	<tr>
+    		<th>用户名</th>
+    		<th>密码</th>
+    	</tr>
+    	<%
+    
+    	for(i=0;i<5;i++){
+    	 %> 
+    	<tr>
+    		<td>${users[i].username}</td>
+    		<td>${users[i].password}</td>
+    	</tr>
+    	<%} %>
+    </table>
   </body>
 </html>

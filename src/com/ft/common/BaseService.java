@@ -20,7 +20,7 @@ import com.ft.common.InjectBaseDependencyHelper;
 import com.ft.common.Page;
 
 /**
- * 閫氱敤Service瀹炵幇
+ * 通用Service实现
  * 
  * @author zhangQ
  * create date:2013-6-19
@@ -45,7 +45,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鏂板瀵硅薄.
+	 * 新增对象.
 	 */
 	@Transactional
 	public void save(final T entity) {
@@ -54,7 +54,7 @@ public abstract class BaseService<T> {
 		if(Validator.isNotNull(uuidFile)){
 			Object fieldValue = ReflectionUtils.getFieldValue(entity, "uuid");
 			if(Validator.isNull(fieldValue)){
-				ReflectionUtils.invokeSetterMethod(entity, "uuid", Identities.uuid2());		//鑷姩浜х敓uuid
+				ReflectionUtils.invokeSetterMethod(entity, "uuid", Identities.uuid2());		//自动产生uuid
 			}
 		}
 		*/
@@ -62,7 +62,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 淇濆瓨鏂板鎴栦慨鏀圭殑瀵硅薄.
+	 * 保存新增或修改的对象.
 	 * @param entity
 	 */
 	@Transactional
@@ -71,7 +71,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鏇存柊瀵硅薄
+	 * 更新对象
 	 */
 	@Transactional
 	public void update(final T entity){
@@ -80,7 +80,7 @@ public abstract class BaseService<T> {
 		if(Validator.isNotNull(uuidFile)){
 			Object fieldValue = ReflectionUtils.getFieldValue(entity, "uuid");
 			if(Validator.isNull(fieldValue)){
-				ReflectionUtils.invokeSetterMethod(entity, "uuid", Identities.uuid2());		//鑷姩浜х敓uuid
+				ReflectionUtils.invokeSetterMethod(entity, "uuid", Identities.uuid2());		//自动产生uuid
 			}
 		}
 		*/
@@ -88,7 +88,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鏇存柊瀵硅薄
+	 * 更新对象
 	 * @Transactional
 	 */
 	public T merge(final T entity){
@@ -96,9 +96,9 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鍒犻櫎瀵硅薄.
+	 * 删除对象.
 	 * 
-	 * @param entity 瀵硅薄蹇呴』鏄痵ession涓殑瀵硅薄鎴栧惈id灞炴�鐨則ransient瀵硅薄.
+	 * @param entity 对象必须是session中的对象或含id属性的transient对象.
 	 */
 	@Transactional
 	public void delete(final T entity) {
@@ -106,7 +106,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鎸塱d鍒犻櫎瀵硅薄.
+	 * 按id删除对象.
 	 */
 	@Transactional
 	public void delete(final Serializable id) {
@@ -114,7 +114,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鎸塱d鑾峰彇瀵硅薄.
+	 * 按id获取对象.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public T get(final Serializable id) {
@@ -122,7 +122,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鑾峰彇鍏ㄩ儴瀵硅薄.
+	 * 获取全部对象.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public List<T> findAll() {
@@ -130,7 +130,7 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 缁熻鎵�湁
+	 * 统计所有
 	 * @return
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
@@ -139,7 +139,7 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鍒犻櫎鎵�湁
+	 * 删除所有
 	 */
 	@Transactional
 	public void removeAll(){
@@ -147,7 +147,7 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鎸夌収hql鎵归噺鏇存柊
+	 * 按照hql批量更新
 	 * @param hql
 	 * @param objects
 	 */
@@ -157,7 +157,7 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鍒嗛〉鏌ヨ鎵�湁锛屽苟涓旀寜鐓rderBy瀛楁鎺掑簭
+	 * 分页查询所有，并且按照orderBy字段排序
 	 * @param orderBy
 	 * @param isAsc
 	 * @param pageIndex
@@ -173,7 +173,7 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鍒嗛〉鏌ヨ鎵�湁锛屽苟涓旀寜鐓rderBy灏佽鐨凪ap鎺掑簭
+	 * 分页查询所有，并且按照orderBy封装的Map排序
 	 * @param orderby
 	 * @param pageIndex
 	 * @param pageSize
@@ -188,9 +188,9 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鏉′欢鍒嗛〉鏌ヨ
-	 * @param whereHql 涓嶅惈"where"鍏抽敭瀛楃殑鏌ヨ鏉′欢锛屽"name=? and age=?"
-	 * @param queryParams 鍙傛暟鍊煎璞�
+	 * 条件分页查询
+	 * @param whereHql 不含"where"关键字的查询条件，如"name=? and age=?"
+	 * @param queryParams 参数值对象
 	 * @param pageIndex
 	 * @param pageSize
 	 * @return
@@ -204,11 +204,11 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鏉′欢鍒嗛〉鏌ヨ
-	 * @param whereHql 涓嶅惈"where"鍏抽敭瀛楃殑鏌ヨ鏉′欢锛屽"name=? and age=?"
+	 * 条件分页查询
+	 * @param whereHql 不含"where"关键字的查询条件，如"name=? and age=?"
 	 * @param pageIndex
 	 * @param pageSize
-	 * @param queryParams 鍙傛暟鍊煎璞�
+	 * @param queryParams 参数值对象
 	 * @return
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
@@ -220,7 +220,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鍒嗛〉鏌ヨ鎵�湁
+	 * 分页查询所有
 	 * @param pageIndex
 	 * @param pageSize
 	 * @return
@@ -234,10 +234,10 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鏉′欢鏌ヨ锛屽苟涓斿垎椤佃繑鍥炵粨鏋�
-	 * @param whereHql 涓嶅惈"where"鍏抽敭瀛楃殑鏌ヨ鏉′欢锛屽"name=? and age=?"
-	 * @param queryParams 鍙傛暟鍊煎璞�
-	 * @param orderBy 鎺掑簭map锛屽 new LinkedHashMap<String,String>().put("name","desc")
+	 * 条件查询，并且分页返回结果
+	 * @param whereHql 不含"where"关键字的查询条件，如"name=? and age=?"
+	 * @param queryParams 参数值对象
+	 * @param orderBy 排序map，如 new LinkedHashMap<String,String>().put("name","desc")
 	 * @param pageIndex
 	 * @param pageSize
 	 * @return
@@ -251,7 +251,7 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鎸夌収鏉′欢缁熻
+	 * 按照条件统计
 	 * @param whereHql
 	 * @param queryParams
 	 * @return
@@ -262,7 +262,7 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鏇村姞瀹屾暣hql鏉′欢鏌ヨ
+	 * 更加完整hql条件查询
 	 * @param fullHQL
 	 * @param queryParams
 	 * @return
@@ -272,7 +272,7 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鎸夊睘鎬ф煡鎵惧璞″垪琛�鍖归厤鏂瑰紡涓虹浉绛�
+	 * 按属性查找对象列表,匹配方式为相等.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public List<T> findBy(final String propertyName, final Object value) {
@@ -280,7 +280,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鎸夊睘鎬ф煡鎵惧敮涓�璞�鍖归厤鏂瑰紡涓虹浉绛�
+	 * 按属性查找唯一对象,匹配方式为相等.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public T findUniqueBy(final String propertyName, final Object value) {
@@ -288,7 +288,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鎸塱d鍒楄〃鑾峰彇瀵硅薄.
+	 * 按id列表获取对象.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public List<T> findByIds(List<? extends Serializable> ids) {
@@ -296,7 +296,7 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鎸塱d鍒楄〃鑾峰彇瀵硅薄.
+	 * 按id列表获取对象.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public List<T> findByIds(Serializable[] ids) {
@@ -310,9 +310,9 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鎸塇QL鏌ヨ瀵硅薄鍒楄〃.
+	 * 按HQL查询对象列表.
 	 * 
-	 * @param values 鏁伴噺鍙彉鐨勫弬鏁�鎸夐『搴忕粦瀹�
+	 * @param values 数量可变的参数,按顺序绑定.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public <X> List<X> find(final String hql, final Object... values) {
@@ -320,9 +320,9 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鎸塇QL鏌ヨ瀵硅薄鍒楄〃.
+	 * 按HQL查询对象列表.
 	 * 
-	 * @param values 鍛藉悕鍙傛暟,鎸夊悕绉扮粦瀹�
+	 * @param values 命名参数,按名称绑定.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public <X> List<X> find(final String hql, final Map<String, ?> values) {
@@ -330,10 +330,10 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鎸夌収FullHQL鍒嗛〉鏌ヨ瀵硅薄鍒楄〃
-	 * @param firstIndex 璧峰琛岀殑涓嬫爣锛岀涓�釜浠�寮�銆傛敞鎰忥細鍖哄埆pageIndex 
+	 * 按照FullHQL分页查询对象列表
+	 * @param firstIndex 起始行的下标，第一个从0开始。注意：区别pageIndex 
 	 * @param pageSize
-	 * @param hql 瀹屾暣鐨刪ql璇彞
+	 * @param hql 完整的hql语句
 	 * @param values
 	 * @return
 	 */
@@ -343,8 +343,8 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鍒嗛〉鏌ヨ鎵�湁鍒楄〃
-	 * @param firstIndex 璧峰琛岀殑涓嬫爣锛岀涓�釜浠�寮�銆傛敞鎰忥細鍖哄埆pageIndex 
+	 * 分页查询所有列表
+	 * @param firstIndex 起始行的下标，第一个从0开始。注意：区别pageIndex 
 	 * @param pageSize
 	 * @return
 	 */
@@ -354,9 +354,9 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鎸塇QL鏌ヨ鍞竴瀵硅薄.
+	 * 按HQL查询唯一对象.
 	 * 
-	 * @param values 鏁伴噺鍙彉鐨勫弬鏁�鎸夐『搴忕粦瀹�
+	 * @param values 数量可变的参数,按顺序绑定.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public <X> X findUnique(final String hql, final Object... values) {
@@ -364,9 +364,9 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鎸塇QL鏌ヨ鍞竴瀵硅薄.
+	 * 按HQL查询唯一对象.
 	 * 
-	 * @param values 鍛藉悕鍙傛暟,鎸夊悕绉扮粦瀹�
+	 * @param values 命名参数,按名称绑定.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public <X> X findUnique(final String hql, final Map<String, ?> values) {
@@ -374,7 +374,7 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鎵цHQL杩涜鎵归噺淇敼/鍒犻櫎鎿嶄綔.
+	 * 执行HQL进行批量修改/删除操作.
 	 */
 	@Transactional
 	public int batchExecute(final String hql, final Object... values) {
@@ -382,7 +382,7 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鎵цHQL杩涜鎵归噺淇敼/鍒犻櫎鎿嶄綔.
+	 * 执行HQL进行批量修改/删除操作.
 	 */
 	@Transactional
 	public int batchExecute(final Object[] values,final String hql) {
@@ -390,9 +390,9 @@ public abstract class BaseService<T> {
 	}
 	
 	/**
-	 * 鎵цHQL杩涜鎵归噺淇敼/鍒犻櫎鎿嶄綔.
+	 * 执行HQL进行批量修改/删除操作.
 	 * 
-	 * @return 鏇存柊璁板綍鏁�
+	 * @return 更新记录数.
 	 */
 	@Transactional
 	public int batchExecute(final String hql, final Map<String, ?> values) {
@@ -400,20 +400,20 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鏍规嵁鏌ヨHQL涓庡弬鏁板垪琛ㄥ垱寤篞uery瀵硅薄.
+	 * 根据查询HQL与参数列表创建Query对象.
 	 * <p/>
-	 * 鏈被灏佽鐨刦ind()鍑芥暟鍏ㄩ儴榛樿杩斿洖瀵硅薄绫诲瀷涓篢,褰撲笉涓篢鏃朵娇鐢ㄦ湰鍑芥暟.
+	 * 本类封装的find()函数全部默认返回对象类型为T,当不为T时使用本函数.
 	 * 
-	 * @param values 鏁伴噺鍙彉鐨勫弬鏁�鎸夐『搴忕粦瀹�
+	 * @param values 数量可变的参数,按顺序绑定.
 	 */
 	public Query createQuery(final String queryString, final Object... values) {
 		return baseDao.createQuery(queryString, values);
 	}
 
 	/**
-	 * 鎸塁riteria鏌ヨ瀵硅薄鍒楄〃.
+	 * 按Criteria查询对象列表.
 	 * 
-	 * @param criterions 鏁伴噺鍙彉鐨凜riterion.
+	 * @param criterions 数量可变的Criterion.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public List<T> find(final Criterion... criterions) {
@@ -421,9 +421,9 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鎸塁riteria鏌ヨ鍞竴瀵硅薄.
+	 * 按Criteria查询唯一对象.
 	 * 
-	 * @param criterions 鏁伴噺鍙彉鐨凜riterion.
+	 * @param criterions 数量可变的Criterion.
 	 */
 	@Transactional(readOnly=true,propagation=Propagation.REQUIRED)
 	public T findUnique(final Criterion... criterions) {
@@ -431,10 +431,10 @@ public abstract class BaseService<T> {
 	}
 
 	/**
-	 * 鍒濆鍖栧璞� 浣跨敤load()鏂规硶寰楀埌鐨勪粎鏄璞roxy, 鍦ㄤ紶鍒癡iew灞傚墠闇�杩涜鍒濆鍖� 
-	 * 鍙垵濮嬪寲entity鐨勭洿鎺ュ睘鎬�浣嗕笉浼氬垵濮嬪寲寤惰繜鍔犺浇鐨勫叧鑱旈泦鍚堝拰灞炴�. 濡傞渶鍒濆鍖栧叧鑱斿睘鎬�鍙疄鐜版柊鐨勫嚱鏁�鎵ц:
-	 * Hibernate.initialize(user.getRoles())锛屽垵濮嬪寲User鐨勭洿鎺ュ睘鎬у拰鍏宠仈闆嗗悎. Hibernate.initialize
-	 * (user.getDescription())锛屽垵濮嬪寲User鐨勭洿鎺ュ睘鎬у拰寤惰繜鍔犺浇鐨凞escription灞炴�.
+	 * 初始化对象. 使用load()方法得到的仅是对象Proxy, 在传到View层前需要进行初始化. 
+	 * 只初始化entity的直接属性,但不会初始化延迟加载的关联集合和属性. 如需初始化关联属性,可实现新的函数,执行:
+	 * Hibernate.initialize(user.getRoles())，初始化User的直接属性和关联集合. Hibernate.initialize
+	 * (user.getDescription())，初始化User的直接属性和延迟加载的Description属性.
 	 */
 	public void initEntity(T entity) {
 		baseDao.initEntity(entity);

@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,7 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>My JSP 'login.jsp' starting page</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -18,9 +19,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
-    <jsp:forward page="/WEB-INF/jsp/login.jsp"></jsp:forward>
+    登录界面. <br>
+    <form method="post" action="${pageContext.request.contextPath}/user/toSignIn">
+	<table>
+	<tr>
+		<td>用户名</td>
+		<td><input type="text" name="username"></td>
+	</tr>
+	<tr>
+		<td>密码</td>
+		<td><input type="password" name="password"></td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="登录" ></td>
+		<td></td>
+	</tr>
+	</table>
+  </form>
   </body>
 </html>

@@ -1,4 +1,4 @@
-package com.ssh.common;
+package com.ft.common;
 
 
 import java.beans.PropertyDescriptor;
@@ -11,8 +11,8 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ReflectionUtils;
-import com.ssh.common.BaseDao;
-import com.ssh.common.BaseService;
+import com.ft.common.BaseDao;
+import com.ft.common.BaseService;
 
 /**
  * 注入BaseDao 及 BaseService 的工具类
